@@ -19,10 +19,10 @@
 
 |   Info      |        Description     |
 | ----------- | ---------------------- |
-|  Title      |       ProjectTitle     |
+|  Title      |       FlightDelayPro   |
 | System URL  |      link_to_system    |
 | Video Link  |      link_to_video     |
 
 ## Project Summary
 
-This is a summary of the project!
+FlightDelayPro is a web-based application designed to help travelers with choosing the fastest and most time efficient flights based on past flight delays and cancellations. It helps them make informed decisions and reduce travel-related stress. With our comprehensive database and user-friendly interface, we will be able to offer users valuable insights into booking the perfect flight.
