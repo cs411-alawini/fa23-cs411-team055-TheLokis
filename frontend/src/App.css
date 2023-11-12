@@ -1,0 +1,119 @@
+body {
+    padding: 1%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1{
+    text-align: center;
+}
+
+#routes {
+    display: block;
+}
+
+/* Format navigation bar*/
+#menu{
+    margin: none;
+    display: block;
+}
+     
+#menu ul{
+    text-align: center;
+    margin: none;
+    background: #13294B;
+}
+     
+#menu li{
+    display: inline-block;
+    padding: none;
+    margin: none;
+}
+     
+#menu li a, #menu li span{
+    display: inline-block;
+    padding: 0em 1.5em;
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    line-height: 60px;
+}
+     
+#menu li a{
+    color: #FFF;
+}
+     
+#menu li:hover a, #menu li span{
+    background: #FFF;
+    color: #13294B;
+    border-left: 1px solid #13294B;
+    text-decoration: none;
+}
+
+/* Format table */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table td, table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+table tr:nth-child(even){background-color: #f2f2f2;}
+
+table tr:hover {background-color: #ddd;}
+
+table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #13294B;
+  color: white;
+}
+
+/* Format text field */
+label {
+    display: inline-block;
+    padding: 10px 10px 10px 0;
+}
+
+input[type="text"] {
+    margin-left: 10px;
+    width: 150px;
+    height: 20px;
+}
+
+input[type="number"] {
+    margin-left: 10px;
+    width: 150px;
+    height: 20px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* Format button */
+input[type="submit"] {
+    margin-left: 0px;
+    padding: 7px 15px;
+    border: none;
+    color: white;
+    background-color: #13294B;
+    transition-duration: 0.3s;
+    border-radius: 5px;
+}
+ 
+input[type="submit"]:hover {
+    background-color: #254f8e;
+    color: orange;
+}
+ 
