@@ -1,10 +1,26 @@
 import * as React from "react";
+import Axios from 'axios';
+import {useState, useEffect} from "react";
 
 function OrigToDest() {
-    const data = [
-        { orig_airport_code: "ORD", dest_airport_code: "LAX", airline_code: "UA", flight_number: 712, airline_name: "United Air Lines Inc.", delay_rate: 2},
-        { orig_airport_code: "LAS", dest_airport_code: "JFK", airline_code: "AA", flight_number: 278, airline_name: "American Airlines Inc.", delay_rate: 10}
-    ];
+    const [origAirport, setOrigAirport] = useState('');
+    const [destAirport, setDestAirport] = useState('');
+    const [data, setData] = useState([]);
+
+    const getByAirport = () => {
+        Axios.get('http://localhost:3002/api/getByAirport', {
+            origAirport: origAirport,
+            destAirport: destAirport
+        }).then((response) => {
+            alert('success')
+            setData(response.data);
+        });
+    }
+
+    // const data = [
+    //     { orig_airport_code: "ORD", dest_airport_code: "LAX", airline_code: "UA", flight_number: 712, airline_name: "United Air Lines Inc.", delay_rate: 2},
+    //     { orig_airport_code: "LAS", dest_airport_code: "JFK", airline_code: "AA", flight_number: 278, airline_name: "American Airlines Inc.", delay_rate: 10}
+    // ];
 
     return (
         <>
@@ -16,13 +32,17 @@ function OrigToDest() {
                 </p>
                 <label>
                     Origin Airport:
-                    <input type="text" name="orig" pattern="[A-Za-z]{3}" />
+                    <input type="text" name="orig" pattern="[A-Za-z]{3}" onChange={(e) => {
+                        setOrigAirport(e.target.value);
+                    }}/>
                 </label>
                 <label>
                     Destination Airport:
-                    <input type="text" name="dest" pattern="[A-Za-z]{3}" />
+                    <input type="text" name="dest" pattern="[A-Za-z]{3}" onChange={(e) => {
+                        setDestAirport(e.target.value);
+                    }}/>
                 </label>
-                <input type="submit" value="Search" />
+                <input type="submit" value="Search" onClick={getByAirport} />
             </form>
 
             <table>
