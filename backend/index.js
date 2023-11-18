@@ -3,7 +3,6 @@ const app = express();
 const mysql = require("mysql");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const { v4: uuidv4 } = require('uuid');
 
 var db = mysql.createConnection({
     host: '146.148.48.57',
@@ -29,7 +28,7 @@ app.post('/api/createAcc', (require, response) => {
     const passwordIn = require.body.password;
 
     const sqlInsert = "INSERT INTO `User` (`username`, `password`) values (?, ?)"; 
-    db.query(sqlInsert, [1500, usernameIn, passwordIn], (error, result) => {
+    db.query(sqlInsert, [usernameIn, passwordIn], (error, result) => {
         console.log(error);
     })
     

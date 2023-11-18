@@ -12,7 +12,7 @@ function Airline() {
             <h2>Search by Airline</h2>
             <form>
                 <label>
-                    Airline code (e.g. ORD):
+                    Airline code (e.g. UA):
                     <input type="text" name="airline" pattern="[A-Za-z]{3}" />
                 </label>
                 <input type="submit" value="Search" />
