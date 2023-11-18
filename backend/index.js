@@ -31,7 +31,6 @@ app.post('/api/createAcc', (require, response) => {
     db.query(sqlInsert, [usernameIn, passwordIn], (error, result) => {
         console.log(error);
     })
-    
 })
 
 app.listen(3002, () => {
