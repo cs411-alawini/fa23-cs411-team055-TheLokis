@@ -1,19 +1,23 @@
 import * as React from "react";
 import Axios from 'axios';
-import {useState, useEffect} from "react";
+import {useState} from "react";
 
 function CreateAcc() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const createAccount = () => {
+    const createAccount = (e) => {
+        e.preventDefault();
         Axios.post('http://localhost:3002/api/createAcc', {
             username: username,
             password: password
         }).then(() => {
-            alert('success')
-        });
+            alert('success');
+        }).catch((error) => {
+            console.log(error);
+        })
     }
+
     return (
         <>
             <h2>Create Account</h2>

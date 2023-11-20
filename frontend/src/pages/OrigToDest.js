@@ -7,20 +7,24 @@ function OrigToDest() {
     const [destAirport, setDestAirport] = useState('');
     const [data, setData] = useState([]);
 
-    const getByAirport = () => {
+    // useEffect(() => {
+    //     Axios.get('http://localhost:3002/api/getByAirportAll').then((response) => {
+    //         setData(response.data);
+    //     });
+    // }, []);
+
+    const getByAirport = (e) => {
+        e.preventDefault();
         Axios.get('http://localhost:3002/api/getByAirport', {
-            origAirport: origAirport,
-            destAirport: destAirport
+            params: {
+                origAirport: origAirport,
+                destAirport: destAirport
+            }
         }).then((response) => {
-            alert('success')
+            // console.log(response.data);
             setData(response.data);
         });
     }
-
-    // const data = [
-    //     { orig_airport_code: "ORD", dest_airport_code: "LAX", airline_code: "UA", flight_number: 712, airline_name: "United Air Lines Inc.", delay_rate: 2},
-    //     { orig_airport_code: "LAS", dest_airport_code: "JFK", airline_code: "AA", flight_number: 278, airline_name: "American Airlines Inc.", delay_rate: 10}
-    // ];
 
     return (
         <>
@@ -59,7 +63,7 @@ function OrigToDest() {
                             <td>{val.orig_airport_code}-{val.dest_airport_code}</td>
                             <td>{val.airline_code}{val.flight_number}</td>
                             <td>{val.airline_name}</td>
-                            <td>{val.delay_rate}%</td>
+                            <td>{Math.round(val.delay_rate)}%</td>
                         </tr>
                     )
                 })}

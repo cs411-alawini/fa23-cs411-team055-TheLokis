@@ -1,11 +1,22 @@
 import * as React from "react";
+import Axios from 'axios';
+import {useState} from "react";
 
 function Airline() {
-    // num_of_flights = how many unique flight number this airline has?
-    const data = [
-        { airline_code: "UA", airline_name: "United Air Lines Inc.", num_of_flights: 3, delay_rate: 2},
-        { airline_code: "AA", airline_name: "American Airlines Inc.", num_of_flights: 10, delay_rate: 10},
-    ];
+    const [airline, setAirline] = useState('');
+    const [data, setData] = useState([]);
+
+    const getByAirline = (e) => {
+        e.preventDefault();
+        Axios.get('http://localhost:3002/api/getByAirline', {
+            params: {
+                airline: airline,
+            }
+        }).then((response) => {
+            // console.log(response.data);
+            setData(response.data);
+        });
+    }
     
     return (
         <>
@@ -13,9 +24,11 @@ function Airline() {
             <form>
                 <label>
                     Airline code (e.g. UA):
-                    <input type="text" name="airline" pattern="[A-Za-z]{3}" />
+                    <input type="text" name="airline" pattern="[A-Za-z0-9]{2}" onChange={(e) => {
+                        setAirline(e.target.value);
+                    }}/>
                 </label>
-                <input type="submit" value="Search" />
+                <input type="submit" value="Search" onClick={getByAirline} />
             </form>
 
             <table>
@@ -30,9 +43,9 @@ function Airline() {
                     return (
                         <tr key={key}>
                             <td>{val.airline_code}</td>
-                            <td>{val.airline_name}{val.flight_number}</td>
+                            <td>{val.airline_name}</td>
                             <td>{val.num_of_flights}</td>
-                            <td>{val.delay_rate}%</td>
+                            <td>{Math.round(val.delay_rate)}%</td>
                         </tr>
                     )
                 })}
