@@ -7,12 +7,6 @@ function OrigToDest() {
     const [destAirport, setDestAirport] = useState('');
     const [data, setData] = useState([]);
 
-    // useEffect(() => {
-    //     Axios.get('http://localhost:3002/api/getByAirportAll').then((response) => {
-    //         setData(response.data);
-    //     });
-    // }, []);
-
     const getByAirport = (e) => {
         e.preventDefault();
         Axios.get('http://localhost:3002/api/getByAirport', {
@@ -21,7 +15,6 @@ function OrigToDest() {
                 destAirport: destAirport
             }
         }).then((response) => {
-            // console.log(response.data);
             setData(response.data);
         });
     }

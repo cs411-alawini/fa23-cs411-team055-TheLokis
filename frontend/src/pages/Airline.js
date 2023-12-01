@@ -3,31 +3,38 @@ import Axios from 'axios';
 import {useState} from "react";
 import { Chart } from "react-google-charts";
 
+export const options = {
+    title: "By State of Origin Airport and Destination Airport",
+    is3D: true,
+};
+
 function Airline() {
     const [airline, setAirline] = useState('');
-    // const [noData, setNoData] = useState(true);
     const [data, setData] = useState([]);
-    const [state, setState] = useState([["Same State Delay", 0], ["Different State Delay", 0]]);
+    const [state, setState] = useState([["state", "number"], ["Same State Delay", 0], ["Different State Delay", 0]]);
+    const [error, setError] = useState(null);
 
-    const getByAirline = (e) => {
+    const getByAirline = async (e) => {
         e.preventDefault();
-        Axios.get('http://localhost:3002/api/getByAirline', {
+        try {
+          const response = await Axios.get('http://localhost:3002/api/getByAirline', {
             params: {
-                airline: airline,
+              airline: airline,
             }
-        }).then((response) => {
-            // console.log(response.data);
-            setData(response.data);
-        }).then((response) => {
-            if (data && data.length > 0) {
-                // setNoData(false);
-                const temp = state;
-                temp[0][1] = response.data[0].same_state_delay;
-                temp[1][1] = response.data[0].diff_state_delay;
-                setState(temp);
-            }
-        });
-    }
+          });
+    
+          setData(response.data);
+    
+          if (response.data && response.data.length > 0) {
+            const temp = state;
+            temp[1][1] = response.data[0].same_state_delay;
+            temp[2][1] = response.data[0].diff_state_delay;
+            setState(temp);
+          }
+        } catch (error) {
+          setError(error.message || 'An error occurred');
+        }
+      }
     
     return (
         <>
@@ -42,26 +49,11 @@ function Airline() {
                 <input type="submit" value="Search" onClick={getByAirline} />
             </form>
 
-            {/* <table>
-                <tr>
-                    <th>Airline Code</th>
-                    <th>Airline Name</th>
-                    <th>Number of Flights in Database</th>
-                    <th>Delay Rate</th>
-                </tr>
-
-                {data.map((val, key) => {
-                    return (
-                        <tr key={key}>
-                            <td>{val.airline_code}</td>
-                            <td>{val.airline_name}</td>
-                            <td>{val.num_of_flights}</td>
-                            <td>{Math.round(val.delay_rate)}%</td>
-                        </tr>
-                    )
-                })}
-            </table> */}
-                {data.map((val) => {
+            {data.length === 0 ?  (
+                <h3>No data</h3>
+            ):(
+                data.map((val) => {
+                    console.log(state)
                     return (
                         <>
                             <h3>Airline Code: </h3>
@@ -72,10 +64,17 @@ function Airline() {
                             {val.num_flights}
                             <h3>Delay Rate: </h3>
                             {Math.round(val.delay_rate)}%
+                            <Chart
+                                chartType="PieChart"
+                                data={state}
+                                options={options}
+                                width={"100%"}
+                                height={"400px"}
+                            />
                         </>
                     )
-                })}
-
+                })
+            )}
         </>
     );
 }
