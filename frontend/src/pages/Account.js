@@ -16,6 +16,9 @@ function Account() {
                     <li>
                         <Link to="/update-password">Update Password</Link>
                     </li>
+                    <li>
+                        <Link to="/delete-account">Delete Account</Link>
+                    </li>
                 </ul>
             </nav>
         </>

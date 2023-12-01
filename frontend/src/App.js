@@ -10,6 +10,7 @@ import AccRecord from './pages/AccRecord.js'
 import CreateRecord from './pages/CreateRecord.js'
 import Account from './pages/Account.js'
 import UpdatePassword from './pages/UpdatePassword.js'
+import DeleteAccount from './pages/DeleteAccount';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route path="/create-record" element={<CreateRecord/>}/>
         <Route path="/account" element={<Account/>}/>
         <Route path="/update-password" element={<UpdatePassword/>}/>
+        <Route path="/delete-account" element={<DeleteAccount/>}/>
       </Routes>
     </BrowserRouter>
   );
