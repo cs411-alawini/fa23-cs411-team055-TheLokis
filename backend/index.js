@@ -160,7 +160,6 @@ app.delete('/api/deleteAccount', (req, res) => {
   const usernameIn = req.body.username;
   const passwordIn = req.body.password;
 
-  // Check if the provided credentials are valid
   const sqlSelect = 'SELECT * FROM `User` WHERE `username` = ? AND `password` = ?';
   db.query(sqlSelect, [usernameIn, passwordIn], (error, result) => {
     if (error) {
@@ -168,7 +167,7 @@ app.delete('/api/deleteAccount', (req, res) => {
       res.status(500).json({ success: false, message: 'Failed to delete account.' });
     } else {
       if (result.length > 0) {
-        // Valid credentials, proceed with the deletion
+
         const sqlDeleteAccount = 'DELETE FROM `User` WHERE `username` = ? AND `password` = ?';
         db.query(sqlDeleteAccount, [usernameIn, passwordIn], (deleteError, deleteResult) => {
           if (deleteError) {
@@ -183,7 +182,7 @@ app.delete('/api/deleteAccount', (req, res) => {
           }
         });
       } else {
-        // Invalid credentials
+
         res.status(401).json({ success: false, message: 'Invalid username or password.' });
       }
     }
