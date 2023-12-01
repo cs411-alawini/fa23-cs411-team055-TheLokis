@@ -92,21 +92,21 @@ app.get('/api/getByAirport', (require, response) => {
     })
 })
 
-app.get('/api/getByAirline', (require, response) => {
-  const airlineIn = require.query.airline;
+// app.get('/api/getByAirline', (require, response) => {
+//   const airlineIn = require.query.airline;
 
-  const sqlSelect = 
-    `SELECT a.airline_code, a.airline_name, COUNT(d.delay_number) AS num_of_flights, (SUM(CASE WHEN d.minutes > 0 THEN 1 ELSE 0 END) / COUNT(d.delay_number)) * 100 AS delay_rate 
-    FROM Airline a NATURAL JOIN Delay d 
-    WHERE a.airline_code = ?
-    GROUP BY a.airline_code`;
-  db.query(sqlSelect, [airlineIn], (error, result) => {
-    response.send(result);
-    console.log(result);
-    if (error) 
-      console.log(error);
-  })
-})
+//   const sqlSelect = 
+//     `SELECT a.airline_code, a.airline_name, COUNT(d.delay_number) AS num_of_flights, (SUM(CASE WHEN d.minutes > 0 THEN 1 ELSE 0 END) / COUNT(d.delay_number)) * 100 AS delay_rate 
+//     FROM Airline a NATURAL JOIN Delay d 
+//     WHERE a.airline_code = ?
+//     GROUP BY a.airline_code`;
+//   db.query(sqlSelect, [airlineIn], (error, result) => {
+//     response.send(result);
+//     console.log(result);
+//     if (error) 
+//       console.log(error);
+//   })
+// })
 
 app.get('/api/getAccountRecord', (require, response) => {
   const usernameIn = require.query.username;
@@ -175,17 +175,32 @@ app.delete('/api/deleteAccount', (req, res) => {
             res.status(500).json({ success: false, message: 'Failed to delete account.' });
           } else {
             if (deleteResult.affectedRows > 0) {
-              res.json({ success: true, message: 'Account deleted successfully.' });
+              res.json({ success: true, message: 'Account delete success.' });
             } else {
               res.status(401).json({ success: false, message: 'Invalid username or password.' });
             }
           }
         });
       } else {
-
         res.status(401).json({ success: false, message: 'Invalid username or password.' });
       }
     }
+  });
+})
+
+app.get('/api/getByAirline', (require, response) => {
+  const inputAirline = require.query.airline; 
+  console.log(inputAirline);
+
+  const sqlCallStoredProcedure = "CALL GetFlightsDelayRatesAndStates(?)";
+
+  db.query(sqlCallStoredProcedure, [inputAirline], (error, result) => {
+      if (error) {
+          console.error(error);
+          response.send([]);
+      } else {
+          response.send(result[0]);
+      }
   });
 });
 

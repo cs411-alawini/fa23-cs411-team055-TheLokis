@@ -1,10 +1,13 @@
 import * as React from "react";
 import Axios from 'axios';
 import {useState} from "react";
+import { Chart } from "react-google-charts";
 
 function Airline() {
     const [airline, setAirline] = useState('');
+    // const [noData, setNoData] = useState(true);
     const [data, setData] = useState([]);
+    const [state, setState] = useState([["Same State Delay", 0], ["Different State Delay", 0]]);
 
     const getByAirline = (e) => {
         e.preventDefault();
@@ -15,6 +18,14 @@ function Airline() {
         }).then((response) => {
             // console.log(response.data);
             setData(response.data);
+        }).then((response) => {
+            if (data && data.length > 0) {
+                // setNoData(false);
+                const temp = state;
+                temp[0][1] = response.data[0].same_state_delay;
+                temp[1][1] = response.data[0].diff_state_delay;
+                setState(temp);
+            }
         });
     }
     
@@ -31,7 +42,7 @@ function Airline() {
                 <input type="submit" value="Search" onClick={getByAirline} />
             </form>
 
-            <table>
+            {/* <table>
                 <tr>
                     <th>Airline Code</th>
                     <th>Airline Name</th>
@@ -49,7 +60,22 @@ function Airline() {
                         </tr>
                     )
                 })}
-            </table>
+            </table> */}
+                {data.map((val) => {
+                    return (
+                        <>
+                            <h3>Airline Code: </h3>
+                            {val.airline_code_var}
+                            <h3>Airline Name: </h3>
+                            {val.airline_name_var}
+                            <h3>Number of Flights in Database: </h3>
+                            {val.num_flights}
+                            <h3>Delay Rate: </h3>
+                            {Math.round(val.delay_rate)}%
+                        </>
+                    )
+                })}
+
         </>
     );
 }
