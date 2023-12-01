@@ -8,6 +8,8 @@ import Airline from './pages/Airline.js'
 import CreateAcc from './pages/CreateAcc.js'
 import AccRecord from './pages/AccRecord.js'
 import CreateRecord from './pages/CreateRecord.js'
+import Account from './pages/Account.js'
+import UpdatePassword from './pages/UpdatePassword.js'
 
 
 function App() {
@@ -21,7 +23,8 @@ function App() {
         <Route path="/account-record" element={<AccRecord/>}/>
         <Route path="/create-account" element={<CreateAcc/>}/>
         <Route path="/create-record" element={<CreateRecord/>}/>
-
+        <Route path="/account" element={<Account/>}/>
+        <Route path="/update-password" element={<UpdatePassword/>}/>
       </Routes>
     </BrowserRouter>
   );

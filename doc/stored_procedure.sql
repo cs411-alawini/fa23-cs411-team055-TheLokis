@@ -1,6 +1,3 @@
--- For SEARCH BY AIRLINE, returns Airline code, Airline name, number of delay records in database (includes non delayed flights), 
--- delay rate, number of delay of flights within same state, number of delay of flights within different state
-
 DELIMITER //
 
 CREATE PROCEDURE GetFlightsDelayRatesAndStates(IN input_airline VARCHAR(2))
@@ -27,23 +24,24 @@ DECLARE results_cursor CURSOR FOR
 DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
 CREATE TEMPORARY TABLE IF NOT EXISTS temp_results (
-    airline_code_var VARCHAR(2),
-    airline_name_var VARCHAR(255),
-    num_flights INT,
-    delay_rate FLOAT,
-    same_state_delay INT DEFAULT 0,
-    diff_state_delay INT DEFAULT 0,
-    total_state_delay INT DEFAULT 0
-);
+        airline_code_var VARCHAR(2),
+        airline_name_var VARCHAR(255),
+        num_flights INT,
+        delay_rate FLOAT,
+        same_state_delay INT DEFAULT 0,
+        diff_state_delay INT DEFAULT 0,
+        total_state_delay INT DEFAULT 0
+    );
 
-INSERT INTO temp_results (airline_code_var, airline_name_var, num_flights, delay_rate)
-SELECT a.airline_code AS airline_code_var,
-    a.airline_name AS airline_name_var,
-    COUNT(d.delay_number) AS num_flights,
-    ROUND((SUM(CASE WHEN d.minutes > 0 THEN 1 ELSE 0 END) / COUNT(d.delay_number)) * 100, 2) AS delay_rate
-FROM Airline a NATURAL JOIN Delay d
-WHERE a.airline_code = input_airline
-GROUP BY a.airline_code;
+-- insert into temporary table
+    INSERT INTO temp_results (airline_code_var, airline_name_var, num_flights, delay_rate)
+    SELECT a.airline_code AS airline_code_var,
+        a.airline_name AS airline_name_var,
+        COUNT(d.delay_number) AS num_flights,
+        ROUND((SUM(CASE WHEN d.minutes > 0 THEN 1 ELSE 0 END) / COUNT(d.delay_number)) * 100, 2) AS delay_rate
+    FROM Airline a NATURAL JOIN Delay d
+    WHERE a.airline_code = input_airline
+    GROUP BY a.airline_code;
 
 OPEN results_cursor;
 
@@ -54,7 +52,6 @@ results_loop: LOOP
         IF done THEN
             LEAVE results_loop;
         END IF;
-
 		SET total_state_delay = total_state_delay + 1;
         IF orig_state_var = dest_state_var THEN
             SET same_state_delay = same_state_delay + 1;
@@ -70,6 +67,7 @@ results_loop: LOOP
 -- Close the cursor
     CLOSE results_cursor;
 
+-- return
     SELECT * FROM temp_results;
 
 DROP TEMPORARY TABLE IF EXISTS temp_results;

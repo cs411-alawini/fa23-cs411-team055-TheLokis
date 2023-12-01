@@ -90,6 +90,12 @@ input[type="number"] {
     height: 20px;
 }
 
+input[type="password"] {
+    margin-left: 10px;
+    width: 150px;
+    height: 20px;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;

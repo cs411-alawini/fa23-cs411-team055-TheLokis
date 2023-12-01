@@ -136,6 +136,26 @@ app.get('/api/getPassword', (require, response) => {
     });
 })
 
+app.post('/api/updatePassword', (require, response) => {
+  const usernameIn = require.body.username;
+  const currentPasswordIn = require.body.currentPassword;
+  const newPasswordIn = require.body.newPassword;
+
+  const sqlUpdatePassword = 'UPDATE `User` SET `password` = ? WHERE `username` = ? AND `password` = ?';
+  db.query(sqlUpdatePassword, [newPasswordIn, usernameIn, currentPasswordIn], (error, result) => {
+      if (error) {
+          console.log(error);
+          response.status(500).json({ success: false, message: 'Failed to update password.' });
+      } else {
+          if (result.affectedRows > 0) {
+              response.json({ success: true, message: 'Password updated successfully.' });
+          } else {
+              response.status(401).json({ success: false, message: 'Invalid username or current password.' });
+          }
+      }
+  });
+});
+
 app.listen(3002, () => {
     console.log("running on port 3002");
 })

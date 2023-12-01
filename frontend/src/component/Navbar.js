@@ -13,13 +13,10 @@ function NavBar() {
             <Link to="/airline">Search by Airline</Link>
           </li>
           <li>
-            <Link to="/account-record">Account Record</Link>
-          </li>
-          <li>
             <Link to="/create-record">Create Record</Link>
           </li>
           <li>
-            <Link to="/create-account">Create Account</Link>
+            <Link to="account">Account</Link>
           </li>
         </ul>
       </nav>
