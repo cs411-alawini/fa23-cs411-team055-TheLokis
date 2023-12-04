@@ -39,7 +39,7 @@ function UpdatePassword() {
                 <label>
                     Current Password:
                     <input
-                        type="password"
+                        type="text"
                         name="currentPassword"
                         value={currentPassword}
                         onChange={(e) => setCurrentPassword(e.target.value)}
@@ -49,7 +49,7 @@ function UpdatePassword() {
                 <label>
                     New Password:
                     <input
-                        type="password"
+                        type="text"
                         name="newPassword"
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}

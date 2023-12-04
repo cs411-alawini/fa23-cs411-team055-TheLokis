@@ -9,8 +9,7 @@ function CreateAcc() {
 
     const createAccount = (e) => {
         e.preventDefault();
-        validateForm();
-        if (!formValid) {
+        if (!validateForm()) {
             alert('Please fill out all fields with valid input.');
             return;
         }
@@ -38,7 +37,7 @@ function CreateAcc() {
           password.trim() !== ''
 
     
-        setFormValid(isValid);
+        return isValid;
       };
 
     return (

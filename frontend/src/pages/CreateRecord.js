@@ -35,16 +35,15 @@ function CreateRecord() {
           day >= 1 && day <= 7 &&
           distance >= 1;
     
-        setFormValid(isValid);
+        return isValid;
       };
 
     const createRecord = (e) => {
-        // e.preventDefault();
-        // validateForm();
-        // if (!formValid) {
-        //     alert('Please fill out all fields with valid input.');
-        //     return;
-        // }
+        e.preventDefault();
+        if (!validateForm()) {
+            alert('Please fill out all fields with valid input.');
+            return;
+        }
         e.preventDefault();
         var insertAllowed = false;
         Axios.get('http://localhost:3002/api/getPassword', {

@@ -51,6 +51,7 @@ app.post('/api/createRecord', (require, response) => {
     const origIn = require.body.orig;
     const destIn = require.body.dest;
 
+
     const sqlInsertOF = 
     `INSERT IGNORE INTO Operate_Flight (flight_number, airline_code, orig_airport_code, dest_airport_code) VALUES (?, ?, ?, ?);`
     db.query(sqlInsertOF, [flightNumIn, airlineCodeIn, origIn, destIn], (error, result) => {
