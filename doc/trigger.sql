@@ -1,3 +1,9 @@
+DELIMITER //
+
+CREATE TRIGGER BeforeInsertDelay
+BEFORE INSERT ON Delay
+FOR EACH ROW
+
 BEGIN
     DECLARE db_airline_name VARCHAR(255);
 
@@ -12,3 +18,7 @@ BEGIN
         VALUES(NEW.airline_code, "Others");
     END IF;
 END
+
+
+
+DELIMITER ;
