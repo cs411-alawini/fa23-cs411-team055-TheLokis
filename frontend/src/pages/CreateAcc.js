@@ -5,18 +5,40 @@ import {useState} from "react";
 function CreateAcc() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [formValid, setFormValid] = useState(false);
 
     const createAccount = (e) => {
+        validateForm();
+        if (formValid == false) {
+            alert('Please fill out all fields with valid input.');
+            return;
+        }
         e.preventDefault();
         Axios.post('http://localhost:3002/api/createAcc', {
             username: username,
             password: password
-        }).then(() => {
-            alert('success');
+        }).then((response) => {
+            if (response.data.success) {
+                alert('Account has been created successfully');
+                window.location.reload();
+            } else {
+                alert('Account creation failed: ' + response.data.message);
+            }
+            window.location.reload();
         }).catch((error) => {
             console.log(error);
         })
     }
+
+    const validateForm = () => {
+        // Add your validation logic here
+        const isValid =
+          username.trim() !== '' &&
+          password.trim() !== ''
+
+    
+        setFormValid(true);
+      };
 
     return (
         <>

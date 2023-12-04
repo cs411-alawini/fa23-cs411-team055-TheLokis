@@ -19,8 +19,31 @@ function CreateRecord() {
     const [distance, setDistance] = useState('');
     const [orig, setOrig] = useState('');
     const [dest, setDest] = useState('');
+    const [formValid, setFormValid] = useState(false);
+
+    const validateForm = () => {
+        // Add your validation logic here
+        const isValid =
+          username.trim() !== '' &&
+          password >= 0 &&
+          orig.match(/[A-Za-z]{3,4}/) &&
+          dest.match(/[A-Za-z]{3,4}/) &&
+          airlineCode.match(/[A-Za-z0-9]{2}/) &&
+          flightNum.trim() !== '' &&
+          airlineName.trim() !== '' &&
+          minutes >= 0 &&
+          day >= 1 && day <= 7 &&
+          distance >= 1;
+    
+        setFormValid(true);
+      };
 
     const createRecord = (e) => {
+        validateForm();
+        if (!formValid) {
+            alert('Please fill out all fields with valid input.');
+            return;
+        }
         e.preventDefault();
         var insertAllowed = false;
         Axios.get('http://localhost:3002/api/getPassword', {
@@ -48,7 +71,13 @@ function CreateRecord() {
                     orig: orig,
                     dest: dest
                 }).then((response) => {
-                    alert('record has been created');
+                    if (response.data.success) {
+                        alert('Record has been created successfully');
+                        window.location.reload();
+                    } else {
+                        alert('Record creation failed: ' + response.data.message);
+                    }
+
                 }).catch((error) => {
                     alert('something went wrong when inserting');
                     console.log(error);

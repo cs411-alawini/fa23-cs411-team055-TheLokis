@@ -29,8 +29,12 @@ app.post('/api/createAcc', (require, response) => {
 
     const sqlInsert = "INSERT INTO `User` (`username`, `password`) values (?, ?)"; 
     db.query(sqlInsert, [usernameIn, passwordIn], (error, result) => {
-        if (error)
+        if (error) {
           console.log(error);
+          return response.status(500).json({ success: false, message: 'Error inserting into User' });
+        }
+        return response.status(200).json({ success: true, message: 'Record has been created successfully' });
+          
         // console.log(result);
     })
 })
@@ -60,7 +64,9 @@ app.post('/api/createRecord', (require, response) => {
         console.log(result);
         if (error) {
           console.log(error);
+          return response.status(500).json({ success: false, message: 'Error inserting into Delay' });
         }
+        return response.status(200).json({ success: true, message: 'Record has been created successfully' });
     })
 })
 
