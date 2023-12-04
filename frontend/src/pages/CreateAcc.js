@@ -8,8 +8,9 @@ function CreateAcc() {
     const [formValid, setFormValid] = useState(false);
 
     const createAccount = (e) => {
+        e.preventDefault();
         validateForm();
-        if (formValid == false) {
+        if (!formValid) {
             alert('Please fill out all fields with valid input.');
             return;
         }

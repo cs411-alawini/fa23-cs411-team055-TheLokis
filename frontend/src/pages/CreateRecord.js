@@ -39,6 +39,7 @@ function CreateRecord() {
       };
 
     const createRecord = (e) => {
+        e.preventDefault();
         validateForm();
         if (!formValid) {
             alert('Please fill out all fields with valid input.');
