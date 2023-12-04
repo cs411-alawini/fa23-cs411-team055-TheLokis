@@ -23,6 +23,7 @@ function AccRecord() {
   return (
     <>
         <h2>Account Record</h2>
+        <h4>Showing at most 1,000 rows</h4>
         <form>
             <label>
                 Username:

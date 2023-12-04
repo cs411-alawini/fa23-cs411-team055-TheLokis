@@ -38,7 +38,7 @@ function CreateAcc() {
           password.trim() !== ''
 
     
-        setFormValid(true);
+        setFormValid(isValid);
       };
 
     return (

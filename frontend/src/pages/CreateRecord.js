@@ -25,26 +25,26 @@ function CreateRecord() {
         // Add your validation logic here
         const isValid =
           username.trim() !== '' &&
-          password >= 0 &&
+          password.trim() !== '' &&
           orig.match(/[A-Za-z]{3,4}/) &&
           dest.match(/[A-Za-z]{3,4}/) &&
           airlineCode.match(/[A-Za-z0-9]{2}/) &&
           flightNum.trim() !== '' &&
           airlineName.trim() !== '' &&
-          minutes >= 0 &&
+          minutes.trim() !== '' &&
           day >= 1 && day <= 7 &&
           distance >= 1;
     
-        setFormValid(true);
+        setFormValid(isValid);
       };
 
     const createRecord = (e) => {
-        e.preventDefault();
-        validateForm();
-        if (!formValid) {
-            alert('Please fill out all fields with valid input.');
-            return;
-        }
+        // e.preventDefault();
+        // validateForm();
+        // if (!formValid) {
+        //     alert('Please fill out all fields with valid input.');
+        //     return;
+        // }
         e.preventDefault();
         var insertAllowed = false;
         Axios.get('http://localhost:3002/api/getPassword', {

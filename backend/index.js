@@ -53,7 +53,7 @@ app.post('/api/createRecord', (require, response) => {
 
     const sqlInsertOF = 
     `INSERT IGNORE INTO Operate_Flight (flight_number, airline_code, orig_airport_code, dest_airport_code) VALUES (?, ?, ?, ?);`
-    db.query(sqlInsertOF, [flightNumIn, airlineCodeIn, flightNumIn, airlineCodeIn, origIn, destIn], (error, result) => {
+    db.query(sqlInsertOF, [flightNumIn, airlineCodeIn, origIn, destIn], (error, result) => {
       if (error) {
         console.log(error);
       }
@@ -118,14 +118,20 @@ app.get('/api/getAccountRecord', (require, response) => {
   const usernameIn = require.query.username;
   const passwordIn = require.query.password;
 
-  const sqlSelect = 
+  // const sqlSelect = 
+  //   `SELECT *
+  //   FROM Airline a NATURAL JOIN Delay d NATURAL JOIN User u JOIN Operate_Flight o ON o.flight_number = d.flight_number
+  //   WHERE u.username = ? AND u.password = ? 
+  //   LIMIT 100`; 
+    const sqlSelect = 
     `SELECT *
-    FROM Airline a NATURAL JOIN Delay d NATURAL JOIN User u JOIN Operate_Flight o
-    WHERE u.username = ? AND u.password = ?`;
+    FROM User u LEFT JOIN Delay d ON u.user_id = d.user_id LEFT JOIN Operate_Flight o ON (o.flight_number = d.flight_number AND o.airline_code = d.airline_code )LEFT JOIN Airline a ON a.airline_code = d.airline_code
+    WHERE u.username = ? AND u.password = ? 
+    LIMIT 100`; 
   db.query(sqlSelect, [usernameIn, passwordIn], (error, result) => {
-    response.send(result);
-    console.log(result);
-    if (error) 
+    response.send(result); 
+    console.log(result); 
+    if (error)
       console.log(error);
   })
 })
