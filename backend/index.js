@@ -128,7 +128,7 @@ app.get('/api/getAccountRecord', (require, response) => {
     `SELECT *
     FROM User u LEFT JOIN Delay d ON u.user_id = d.user_id LEFT JOIN Operate_Flight o ON (o.flight_number = d.flight_number AND o.airline_code = d.airline_code )LEFT JOIN Airline a ON a.airline_code = d.airline_code
     WHERE u.username = ? AND u.password = ? 
-    LIMIT 100`; 
+    LIMIT 1000`; 
   db.query(sqlSelect, [usernameIn, passwordIn], (error, result) => {
     response.send(result); 
     console.log(result); 
