@@ -12,8 +12,6 @@
 | Member1     |  larryl3@illinois.edu  |
 | Member2     |        Jack Wang
 | Member2     |  jiamu2@illinois.edu  |
-| Member3     |     Yanqing Li        |
-| Member3     |  yanqing6@illinois.edu  |
 
 ## Project Information
 
